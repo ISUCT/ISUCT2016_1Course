@@ -1,17 +1,15 @@
-public class Demo {
-    public static void main (String[] args){
-	for(int i=0;i<10;i++){
-	    if (i<5){
-	        System.out.println("Less than 5");    
-	    }else{
-		if (i==5){
-		    System.out.println("Equal to 5");    
-	        }else{
-	            System.out.println("More than 5");    
-                }
-	    }	
-        }
-    }
+public class Dog {
+	public static void main(String[] args)
+ArrayList<Egg> myList = new ArrayList<Egg>();
+	Egg s = new Egg();
+	myList.add(s);
+	Egg b = new Egg();
+	myList.add(b);
+	int theSize = myList.size();
+	boolean isIn = myList.contains(s);
+	int idx = myList.indexOf(b);
+	boolean empty = myList.isEmpty();
+	myList.remove(s);
 }
 
 
