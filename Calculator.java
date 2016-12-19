@@ -5,27 +5,36 @@ import java.util.ArrayList;
  */
 public class Calculator {
 
-    public void calc(double a, double b){
+    public Double calc(double x, double b){
         double c;
         double z;
         double y;
-        a = Math.pow(a,3);
+        x = Math.pow(x,3);
         b = Math.pow(b,3);
-        c = a + b;
+        c = x + b;
         c = Math.sin(c);
         c = Math.pow(c,2);
         c = c++;
-        z = a + b;
+        z = x + b;
         z = Math.pow(z,1.0/3.0);
         y = c/z;
-        System.out.println(y);
-        }
-    public void calc(ArrayList<Double> xPer){
-        for (int i = 0; i < 5; i++){
-            double y;
-            y = xPer.get(i);
-            calc(y,2.5);
-        }
-    }
+        return y;
     }
 
+    public ArrayList<Double> calc(ArrayList<Double> xPer){
+        ArrayList<Double> yZn = new ArrayList<Double>();
+        for (Double elem:xPer){
+         Double y = calc(elem,2.5);
+            yZn.add(y);
+        }
+        return yZn;
+    }
+    public ArrayList<Double> calc(double xn, double xk, double dx){
+        ArrayList<Double> yZn = new ArrayList<Double>();
+                for(double x = xn; x<= xk; x+=dx){
+                    double y = calc(x,2.5);
+                    yZn.add(y);
+                }
+                return yZn;
+    }
+}
