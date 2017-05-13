@@ -43,9 +43,6 @@ public class ResultsCalculator {
 
         frame.setSize(950,100);
         frame.setVisible(true);
-
-
-
     }
 
     //чё вводим
