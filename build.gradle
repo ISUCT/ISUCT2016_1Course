@@ -7,6 +7,8 @@ sourceCompatibility = 1.5
 
 repositories {
     mavenCentral()
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+
 }
 
 dependencies {
@@ -40,4 +42,5 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     compile files ('libs/algs4.jar')
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'
 }
