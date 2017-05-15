@@ -1,13 +1,10 @@
 package Calculator;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.*;
-import java.util.List;
 
 
 /**
@@ -126,29 +123,37 @@ public class GUIcalculator extends JFrame {
         xnVal = ((Number) formattedTextField1.getValue()).doubleValue();
         xkVal = ((Number) formattedTextField2.getValue()).doubleValue();
         dxVal = ((Number) formattedTextField3.getValue()).doubleValue();
-
-        String xVal = (String) formattedTextField4.getValue();
 //        List<String> xValList = new ArrayList<String>(Arrays.asList(xVal.split(",")));
 //        xVal = formattedTextField4.getValue();
+        String xVal = (String) formattedTextField4.getValue();
 
-        if (xVadl == null) {
+        String[] xStrArray = xVal.split(", ");
+
+        if (xVal == null) {
             ArrayList<Double> answer = new Calculator().equ1(xnVal, xkVal, dxVal);
             resultLabel.setText("Result: [xn:" + xnVal + " xk:" + xkVal + " dx:" + dxVal + "]");
             textArea1.setText(String.valueOf(new ArrayList<Double>(answer)));
         } else {
             try {
+                Double[] doubleArrayX = new Double[xStrArray.length];
+                for (int i = 0; i < xStrArray.length; i++) {
+                    doubleArrayX[i] = Double.parseDouble(xStrArray[i]);
+            //это как тот tmp
+                    ArrayList<Double> xValRes = new ArrayList<Double>(Arrays.<Double>asList(doubleArrayX));
+                }
 
-                ArrayList<Double> answer = new Calculator().equ1(splitArrX());
-                resultLabel.setText("Result: [x:" + splitArrX() + "]");
-                textArea1.setText(String.valueOf(new ArrayList<Double>(answer)));
-            } catch (Exception e) {
-                resultLabel.setText("Result: Error");
-                textArea1.setText("Check Array");
+                    ArrayList<Double> answer = new Calculator().equ1(xValRes);
+                    resultLabel.setText("Result: [x:" + xValRes + "]");
+                    textArea1.setText(String.valueOf(new ArrayList<Double>(answer)));
+                } catch(Exception e) {
+                    resultLabel.setText("Result: Error");
+                    textArea1.setText("Check Array");
+                }
             }
         }
-
-
     }
+
+
 
 //    public List<Double> tempArrX() {
 //
@@ -175,18 +180,10 @@ public class GUIcalculator extends JFrame {
 //    }
 
 
-    public ArrayList<Double> splitArrX(String xVal) {
-        String[] xStrArray = xVal.split(",");
-        Double[] doubleArrayX = new Double[xStrArray.length];
-        for (int i = 0; i < xStrArray.length; i++) {
-            doubleArrayX[i] = Double.parseDouble(xStrArray[i]);
-            //это как тот tmp
-
-        }
-        ArrayList<Double> xValRes = new ArrayList<Double>(Arrays.<Double>asList(doubleArrayX));
-        return (xValRes);
-
-    }
+//    public ArrayList<Double> splitArrX(String xVal) {
+//
+//
+//    }
 
 //        double payment = computePayment(amount, rate, numPeriods);
 //        paymentField.setValue(new Double(payment));
@@ -248,7 +245,7 @@ public class GUIcalculator extends JFrame {
         formattedTextField4.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_MINUS) && (c != KeyEvent.VK_COMMA) && (c != KeyEvent.VK_PERIOD)) {
+                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_MINUS) && (c != KeyEvent.VK_COMMA) && (c != KeyEvent.VK_PERIOD) && (c != KeyEvent.VK_SPACE)) {
                     e.consume();
                 }
             }
