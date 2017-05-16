@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.NumberFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 
 /**
@@ -27,44 +28,15 @@ public class GUIcalculator extends JFrame {
     private JLabel xLabel;
     private JPanel contentPane;
 
-
     private double xnVal = 1.25;
     private double xkVal = 3.25;
     private double dxVal = 0.4;
-    private String xVal = "1.84, 2.71, 3.81, 4.56, 5.62";
+    private String xVal = "1.84,2.71,3.81,4.56,5.62";
 
+    private NumberFormat ValFormat;
 
-    private NumberFormat xnValFormat;
-    private NumberFormat xkValFormat;
-    private NumberFormat dxValFormat;
-
-//    Double[] xVal = {1.84, 2.71, 3.81, 4.56, 5.62};
-//
-//        на случай поля с массивом
-
-//    List<Double> xVal = Arrays.asList(1.84, 2.71, 3.81, 4.56, 5.62);
-//
-//        на случай поля с массивом, последний способ
-
-//    private ArrayList<xValues> xVal = new ArrayList<xValues>();
-//    class xValue{
-//        private double xVal;
-//
-//        public xValue(double xVal) {
-//            this.xVal = xVal;
-//        }
-//        public double getxVal2() {
-//            return xVal;
-//        }
-//    }
-//
-//        на случай поля с массивом
-
-
-//    private NumberFormat xValFormat;
-//
-//        на случай поля с массивом
-
+    private String colorXnXkDx = "#BB8D00";
+    private String colorX = "#BB4E00";
 
     public GUIcalculator() {
 
@@ -72,22 +44,6 @@ public class GUIcalculator extends JFrame {
         setContentPane(contentPane);
         setVisible(true);
         getRootPane().setDefaultButton(resultButton);
-
-        setUpFormats();
-
-
-        //        formattedTextField1.setValue(new Double(xnVal));
-
-//        formattedTextField1 = new JFormattedTextField(xnValFormat);
-
-//        formattedTextField1.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//
-////                xnVal = ((Number)formattedTextField1.getValue()).doubleValue();
-////                Double xnVal = (Double)formattedTextField1.getValue();
-//
-//            }
-//        });
 
 
         resultButton.addActionListener(new ActionListener() {
@@ -123,122 +79,73 @@ public class GUIcalculator extends JFrame {
         xnVal = ((Number) formattedTextField1.getValue()).doubleValue();
         xkVal = ((Number) formattedTextField2.getValue()).doubleValue();
         dxVal = ((Number) formattedTextField3.getValue()).doubleValue();
-//        List<String> xValList = new ArrayList<String>(Arrays.asList(xVal.split(",")));
-//        xVal = formattedTextField4.getValue();
         String xVal = (String) formattedTextField4.getValue();
 
-        String[] xStrArray = xVal.split(", ");
+        if (xVal.isEmpty()) {
+            if (dxVal >= 0.01 && xkVal <= 1000 && xnVal >= -1000) {
+                try {
+                    ArrayList<Double> answer = new Calculator().equ1(xnVal, xkVal, dxVal);
+                    resultLabel.setText("<html>Result for <font color=\"" + colorXnXkDx + "\">" + xnLabel.getText() + "</font>" + xnVal + ", "
+                            + "<font color=\"" + colorXnXkDx + "\">" + xkLabel.getText() + "</font>" + xkVal + ", "
+                            + "<font color=\"" + colorXnXkDx + "\">" + dxLabel.getText() + "</font>" + dxVal + "</html>");
+                    textArea1.setText(String.valueOf(new ArrayList<Double>(answer)).replace("[", "").replace("]", ""));
+                } catch (Exception e) {
+                    Error();
+                }
+            } else {
+                Error();
+            }
 
-        if (xVal == null) {
-            ArrayList<Double> answer = new Calculator().equ1(xnVal, xkVal, dxVal);
-            resultLabel.setText("Result: [xn:" + xnVal + " xk:" + xkVal + " dx:" + dxVal + "]");
-            textArea1.setText(String.valueOf(new ArrayList<Double>(answer)));
         } else {
             try {
+                String[] xStrArray = xVal.split(",");
                 Double[] doubleArrayX = new Double[xStrArray.length];
                 for (int i = 0; i < xStrArray.length; i++) {
                     doubleArrayX[i] = Double.parseDouble(xStrArray[i]);
-            //это как тот tmp
-                    ArrayList<Double> xValRes = new ArrayList<Double>(Arrays.<Double>asList(doubleArrayX));
                 }
+                ArrayList<Double> xValRes = new ArrayList<Double>(Arrays.<Double>asList(doubleArrayX));
+                ArrayList<Double> answer = new Calculator().equ1(xValRes);
 
-                    ArrayList<Double> answer = new Calculator().equ1(xValRes);
-                    resultLabel.setText("Result: [x:" + xValRes + "]");
-                    textArea1.setText(String.valueOf(new ArrayList<Double>(answer)));
-                } catch(Exception e) {
-                    resultLabel.setText("Result: Error");
-                    textArea1.setText("Check Array");
-                }
+                resultLabel.setText("<html>Result for <font color=\"" + colorX + "\">" + xLabel.getText() + "</font>" + xVal + "</html>");
+                textArea1.setText(answer.toString().replace("[", "").replace("]", ""));
+
+            } catch (Exception e) {
+                resultLabel.setText("<html>Result: <font color=\"red\"> Error</font></html>");
+                textArea1.setText("Check Array");
             }
         }
     }
 
-
-
-//    public List<Double> tempArrX() {
-//
-//        Double[] doubleArray = ArrayUtils.toObject(splitArrX(String xVal));
-//        List<Double> list = Arrays.asList(doubleArray);
-//        return list;
-//    }
-
+    private void Error() {
+        resultLabel.setText("<html>Result: <font color=\"red\"> Error</font></html>");
+        textArea1.setText("Enter the correct values");
+    }
 
     private void onCancel() {
         // add your code here if necessary
         dispose();
     }
 
-//    public void propertyChange(PropertyChangeEvent e) {
-////        Object source = e.getSource();
-////        if (source == formattedTextField1) {
-////            xnVal = ((Number) formattedTextField1.getValue()).doubleValue();
-////        } else if (source == formattedTextField2) {
-////            xkVal = ((Number) formattedTextField2.getValue()).doubleValue();
-////        } else if (source == formattedTextField3) {
-////            dxVal = ((Number) formattedTextField3.getValue()).doubleValue();
-////        }
-//    }
-
-
-//    public ArrayList<Double> splitArrX(String xVal) {
-//
-//
-//    }
-
-//        double payment = computePayment(amount, rate, numPeriods);
-//        paymentField.setValue(new Double(payment));
-
     public static void main(String[] args) {
         GUIcalculator frame = new GUIcalculator();
-        frame.pack();
-        frame.setVisible(true);
-//        frame.splitArrX("1.84,2.71,3.81,4.56,5.62");
-
+        frame.setSize(500, 175);
+//        frame.pack(); //минимальный размер
     }
 
-    private void setUpFormats() {
-        xnValFormat = NumberFormat.getNumberInstance();
-        xkValFormat = NumberFormat.getNumberInstance();
-        dxValFormat = NumberFormat.getNumberInstance();
-    }
-
-
-    //    public ArrayList<Double> tempArrX(){
-//        Double []tmp = {1.84,2.71,3.81,4.56,5.62};
-//        ArrayList<Double> xValRes =  new ArrayList<Double>(Arrays.<Double>asList(tmp));
-//        return(xValRes);
-//    }
-//
-//    Double xnVal = (Double)formattedTextField1.getValue();
-//
-//
-//    ArrayList<Double> xValRes = new Calculator().equ1(tempArrX());
-//
-//    ArrayList<Double> xValRes = new Calculator().equ1(1.25, 3.25, 0.4);
-
-//    Double []xVal = {1.84,2.71,3.81,4.56,5.62};
-//
-//    public ArrayList<Double> xAddArray(){
-//        ArrayList<Double> xValArray =  new ArrayList<Double>(Arrays.<Double>asList(xVal));
-//        return(xValArray);
-//    }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        formattedTextField1 = new JFormattedTextField(xnValFormat);
+        formattedTextField1 = new JFormattedTextField(ValFormat);
         formattedTextField1.setValue(new Double(xnVal));
         formattedTextField1.setColumns(10);
-//        formattedTextField1.addPropertyChangeListener("value", this);
 
-        formattedTextField2 = new JFormattedTextField(xkValFormat);
+        formattedTextField2 = new JFormattedTextField(ValFormat);
         formattedTextField2.setValue(new Double(xkVal));
         formattedTextField2.setColumns(10);
-//        formattedTextField2.addPropertyChangeListener("value", this);
 
-        formattedTextField3 = new JFormattedTextField(dxValFormat);
+        formattedTextField3 = new JFormattedTextField(ValFormat);
         formattedTextField3.setValue(new Double(dxVal));
         formattedTextField3.setColumns(10);
-//        formattedTextField3.addPropertyChangeListener("value", this);
 
 
         formattedTextField4 = new JFormattedTextField();
@@ -250,12 +157,16 @@ public class GUIcalculator extends JFrame {
                 }
             }
         });
-
         formattedTextField4.setValue(xVal);
 
-        resultLabel = new JLabel();
-
-
+        xnLabel = new JLabel();
+        xnLabel.setForeground(Color.decode(colorXnXkDx));
+        xkLabel = new JLabel();
+        xkLabel.setForeground(Color.decode(colorXnXkDx));
+        dxLabel = new JLabel();
+        dxLabel.setForeground(Color.decode(colorXnXkDx));
+        xLabel = new JLabel();
+        xLabel.setForeground(Color.decode(colorX));
     }
 
     /**
@@ -279,24 +190,20 @@ public class GUIcalculator extends JFrame {
         panel2.add(formattedTextField2, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         panel2.add(formattedTextField3, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         panel2.add(formattedTextField4, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        xnLabel = new JLabel();
         xnLabel.setText("xn:");
         panel2.add(xnLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        xkLabel = new JLabel();
         xkLabel.setText("xk:");
         panel2.add(xkLabel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        dxLabel = new JLabel();
         dxLabel.setText("dx:");
         panel2.add(dxLabel, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        xLabel = new JLabel();
         xLabel.setText("x:");
         panel2.add(xLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
-        panel3.add(panel4, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1, true, false));
+        panel3.add(panel4, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_SOUTH, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cancelButton = new JButton();
         cancelButton.setText("Cancel");
         panel4.add(cancelButton, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -309,11 +216,23 @@ public class GUIcalculator extends JFrame {
         saveButton = new JButton();
         saveButton.setText("Save");
         panel4.add(saveButton, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel5 = new JPanel();
+        panel5.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel3.add(panel5, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        panel5.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         textArea1 = new JTextArea();
+        textArea1.setColumns(10);
         textArea1.setLineWrap(true);
-        panel3.add(textArea1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        scrollPane1.setViewportView(textArea1);
+        resultLabel = new JLabel();
         resultLabel.setText("Result:");
-        panel3.add(resultLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel5.add(resultLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        xnLabel.setLabelFor(formattedTextField1);
+        xkLabel.setLabelFor(formattedTextField2);
+        dxLabel.setLabelFor(formattedTextField3);
+        xLabel.setLabelFor(formattedTextField4);
+        resultLabel.setLabelFor(textArea1);
     }
 
     /**
