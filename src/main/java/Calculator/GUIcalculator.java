@@ -6,6 +6,8 @@ import java.awt.event.*;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.io.*;
+import java.util.*;
 
 
 /**
@@ -38,12 +40,16 @@ public class GUIcalculator extends JFrame {
     private String colorXnXkDx = "#BB8D00";
     private String colorX = "#BB4E00";
 
+    private ArrayList dataList;
+
     public GUIcalculator() {
 
         $$$setupUI$$$();
         setContentPane(contentPane);
         setVisible(true);
         getRootPane().setDefaultButton(resultButton);
+
+        dataList = new ArrayList();
 
 
         resultButton.addActionListener(new ActionListener() {
@@ -72,6 +78,109 @@ public class GUIcalculator extends JFrame {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSave();
+            }
+        });
+
+
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onLoad();
+            }
+        });
+    }
+
+    private void onSave(){
+        FileMaskGUI data = new FileMaskGUI(xnVal, xkVal, dxVal, xVal, resultLabel.getText().replaceAll("\\<[^>]*>",""), textArea1.getText());
+        dataList.add(data);
+
+//        String userhome = System.getProperty("user.home");
+        JFileChooser fileSave = new JFileChooser();//(userhome + "\\Desktop");
+        fileSave.showSaveDialog(contentPane);
+        saveFile(fileSave.getSelectedFile());
+
+    }
+
+    private void onLoad(){
+        JFileChooser fileOpen = new JFileChooser();
+        fileOpen.showOpenDialog(contentPane);
+        loadFile(fileOpen.getSelectedFile());
+
+    }
+
+    private void loadFile(File file){
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            int counter = 0;
+            String line;
+            while ((line = reader.readLine()) != null) {
+                counter++;
+                    switch (counter) {
+                        case 1:
+                            xnVal = Double.parseDouble(line);
+                            formattedTextField1.setValue(xnVal);
+                            break;
+                        case 2:
+                            xkVal = Double.parseDouble(line);
+                            formattedTextField2.setValue(xkVal);
+                            break;
+                        case 3:
+                            dxVal = Double.parseDouble(line);
+                            formattedTextField3.setValue(dxVal);
+                            break;
+                        case 4:
+                            formattedTextField4.setValue(line);
+                            break;
+                        case 5:
+                            resultLabel.setText(line);
+                            break;
+                        case 6:
+                            textArea1.setText(line);
+                            break;
+                    }
+            }
+        } catch (Exception ex) {
+            System.out.println("Couldn't read file");
+            ex.printStackTrace();
+        } finally {
+            try {
+                if ( reader != null)
+                    reader.close( );
+            }
+            catch ( IOException e) {}
+        }
+    }
+
+    private void saveFile(File file) {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(file+".txt"));
+            Iterator dataIterator = dataList.iterator();
+            while (dataIterator.hasNext()) {
+                FileMaskGUI dataList = (FileMaskGUI) dataIterator.next();
+                writer.write(dataList.getXnStr() + "\n");
+                writer.write(dataList.getXkStr() + "\n");
+                writer.write(dataList.getDxStr() + "\n");
+                writer.write(dataList.getxStr() + "\n");
+                writer.write(dataList.getxLabelStr() + "\n");
+                writer.write(dataList.getxResStr() + "\n");
+            }
+        } catch(IOException ex) {
+            resultLabel.setText("<html>Result: <font color=\"red\">Couldn't write file</font></html>");
+            ex.printStackTrace();
+        } finally {
+            try {
+            if ( writer != null)
+                writer.close( );
+            }
+            catch ( IOException e) {}
+        }
     }
 
     private void onResult() {
@@ -90,6 +199,7 @@ public class GUIcalculator extends JFrame {
                             + "<font color=\"" + colorXnXkDx + "\">" + dxLabel.getText() + "</font>" + dxVal + "</html>");
                     textArea1.setText(String.valueOf(new ArrayList<Double>(answer)).replace("[", "").replace("]", ""));
                 } catch (Exception e) {
+                    e.printStackTrace();
                     Error();
                 }
             } else {
@@ -110,14 +220,15 @@ public class GUIcalculator extends JFrame {
                 textArea1.setText(answer.toString().replace("[", "").replace("]", ""));
 
             } catch (Exception e) {
-                resultLabel.setText("<html>Result: <font color=\"red\"> Error</font></html>");
+                e.printStackTrace();
+                resultLabel.setText("<html>Result: <font color=\"red\">Error</font></html>");
                 textArea1.setText("Check Array");
             }
         }
     }
 
     private void Error() {
-        resultLabel.setText("<html>Result: <font color=\"red\"> Error</font></html>");
+        resultLabel.setText("<html>Result: <font color=\"red\">Error</font></html>");
         textArea1.setText("Enter the correct values");
     }
 
