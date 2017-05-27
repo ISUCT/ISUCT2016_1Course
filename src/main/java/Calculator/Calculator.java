@@ -1,5 +1,7 @@
 package Calculator;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -11,6 +13,17 @@ import java.awt.event.ActionListener;
  * Created by stud_6 on 12.12.16.
  */
 public class Calculator {
+
+    public void serverGo(){
+        try{
+            ServerSocket serverSock = new ServerSocket(4242);
+            while (true) {
+                
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public Double equ1(double x) {
 
