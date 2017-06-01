@@ -10,7 +10,7 @@ public class TV {
     System.out.println("Taking a number");
 
     }
-   void instaNumber(){
-       system.out.println("installa number")
-   }
+//   void instaNumber(){
+//       system.out.println("installa number")
+//   }
 }

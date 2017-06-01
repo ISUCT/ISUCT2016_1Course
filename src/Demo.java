@@ -7,13 +7,13 @@ public class Demo {
         TVs[0].brand = "LG";
         TVs[0].takeNumber();
         TVs[1].brand = "Samsung";
-        TVs[2] = new TVs();
-        TVs[2].brand = "HTkC"
+//        TVs[2] = new TVs();
+//        TVs[2].brand = "HTkC";
 
-                (int a=0; i<5; i++)
-            TVnames[i] = ""
-        Tv[1] = 3; //
-        Tv[2] = 1; //
+//                (int a=0; i<5; i++)
+//            TVnames[i] = ""
+//        Tv[1] = 3; //
+//        Tv[2] = 1; //
 
     }
 }
