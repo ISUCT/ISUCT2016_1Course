@@ -9,17 +9,13 @@ import java.io.*;
  */
 public class Aid extends JFrame {
 
-    private double xn = 0;
-    private double xk = 0;
-    private double dx = 0;
-    private double a = 0;
-    private double b = 0;
+    private double xn = 0.22;
+    private double xk = 0.92;
+    private double dx = 0.14;
 
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
     private JTextArea textArea1;
     private JButton resultatButton;
     private JButton saveButton;
@@ -27,8 +23,6 @@ public class Aid extends JFrame {
     private JLabel xnLabel;
     private JLabel xkLabel;
     private JLabel dxLabel;
-    private JLabel aLabel;
-    private JLabel bLabel;
     private JPanel root;
 
     public Aid() {
@@ -65,8 +59,6 @@ public class Aid extends JFrame {
             os.writeObject(textField1);
             os.writeObject(textField2);
             os.writeObject(textField3);
-            os.writeObject(textField4);
-            os.writeObject(textField5);
             os.writeObject(textArea1);
 
             os.close();
@@ -82,16 +74,12 @@ public class Aid extends JFrame {
             JTextField textField1Read = (JTextField) is.readObject();
             JTextField textField2Read = (JTextField) is.readObject();
             JTextField textField3Read = (JTextField) is.readObject();
-            JTextField textField4Read = (JTextField) is.readObject();
-            JTextField textField5Read = (JTextField) is.readObject();
 
             JTextArea textArea1Read = (JTextArea) is.readObject();
 
             textField1.setText(textField1Read.getText());
             textField2.setText(textField2Read.getText());
             textField3.setText(textField3Read.getText());
-            textField4.setText(textField4Read.getText());
-            textField5.setText(textField5Read.getText());
             textArea1.setText(textArea1Read.getText());
 
             is.close();
@@ -106,11 +94,9 @@ public class Aid extends JFrame {
         xn = Double.parseDouble(textField1.getText());
         xk = Double.parseDouble(textField2.getText());
         dx = Double.parseDouble(textField3.getText());
-        a = Double.parseDouble(textField4.getText());
-        b = Double.parseDouble(textField5.getText());
         if (dx >= 0.01 && xk <= 1000 & xn >= -1000) {
             try {
-                ArrayList<Double> answer = new Calculator().calc(xn, xk, dx, a, b);
+                ArrayList<Double> answer = new Calculator().calc(xn, xk, dx);
                 textArea1.setText(String.valueOf(new ArrayList<Double>(answer)));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -140,14 +126,6 @@ public class Aid extends JFrame {
         textField3 = new JFormattedTextField();
         textField3.setText(String.valueOf(dx));
         textField3.setColumns(10);
-
-        textField4 = new JFormattedTextField();
-   0      textField4.setText(String.valueOf(a));
-        textField4.setColumns(10);
-
-        textField5 = new JFormattedTextField();
-        textField5.setText(String.valueOf(b));
-        textField5.setColumns(10);
 
 
         textField1.addKeyListener(new KeyAdapter() {
@@ -179,26 +157,6 @@ public class Aid extends JFrame {
             }
         });
         textField3.setText(String.valueOf(dx));
-
-        textField4.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_MINUS) && (c != KeyEvent.VK_COMMA) && (c != KeyEvent.VK_PERIOD) && (c != KeyEvent.VK_SPACE)) {
-                    e.consume();
-                }
-            }
-        });
-        textField4.setText(String.valueOf(a));
-
-        textField5.addKeyListener(new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_MINUS) && (c != KeyEvent.VK_COMMA) && (c != KeyEvent.VK_PERIOD) && (c != KeyEvent.VK_SPACE)) {
-                    e.consume();
-                }
-            }
-        });
-        textField5.setText(String.valueOf(b));
     }
 
     /**
@@ -213,13 +171,11 @@ public class Aid extends JFrame {
         root = new JPanel();
         root.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(5, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         root.add(panel1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel1.add(textField1, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         panel1.add(textField2, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         panel1.add(textField3, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        panel1.add(textField4, new com.intellij.uiDesigner.core.GridConstraints(3, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        panel1.add(textField5, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         xnLabel = new JLabel();
         xnLabel.setText("xn");
         panel1.add(xnLabel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -229,12 +185,6 @@ public class Aid extends JFrame {
         dxLabel = new JLabel();
         dxLabel.setText("dx");
         panel1.add(dxLabel, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        aLabel = new JLabel();
-        aLabel.setText("a");
-        panel1.add(aLabel, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        bLabel = new JLabel();
-        bLabel.setText("b");
-        panel1.add(bLabel, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
         root.add(panel2, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
