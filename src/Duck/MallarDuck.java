@@ -3,5 +3,12 @@ package Duck;
 /**
  * Created by UI on 13.09.2017.
  */
-public class MallarDuck extends Duck implements Flyable, Quackable {
+public class MallarDuck extends Duck{
+public MallarDuck(){
+    flyBehavior = new  FlyWithWings();
+}
+@Override
+public void display(){
+    System.out.println("I am real MallarDuck");
+}
 }
