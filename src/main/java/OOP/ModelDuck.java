@@ -6,8 +6,8 @@ package OOP;
 public class ModelDuck extends Duck{
     public ModelDuck(){
 
-        quackBehavior = new Quack();
         flyBehavior = new FlyNoWay();
+        quackBehavior = new Quack();
     }
 
     public void display(){
