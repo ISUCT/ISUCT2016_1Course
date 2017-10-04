@@ -7,8 +7,12 @@
     private int passengersCount;
     abstract void speed();
     abstract void acceleration();
+
     abstract void weight();
 
+    public FlyingMachines(){
+        System.out.println("Construct");
+    }
     public String getModel() {
         return model;
     }
@@ -32,5 +36,7 @@
     public void setPassengersCount(int passengersCount) {
         this.passengersCount = passengersCount;
     }
-}
 
+
+
+ }

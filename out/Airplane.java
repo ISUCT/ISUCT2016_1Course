@@ -1,10 +1,14 @@
 /**
  * Created by stud_6 on 17.10.16.
  */
-public class Airplane extends FlyingMachines{
+public class Airplane extends FlyingMachines {
     private String model;
-    private String brand;
+
+    private String Color;
     private int passengersCount;
+
+    public Airplane() {
+    }
 
     void  takepassenger() {
         System.out.print("Taking a passenger");
@@ -12,7 +16,6 @@ public class Airplane extends FlyingMachines{
     void uploadCould() {
         System.out.print("upload passengers");
     }
-
     void takeage() {
         System.out.print(("Taking a age"));
 
@@ -33,6 +36,5 @@ public class Airplane extends FlyingMachines{
     @Override
     void weight() {
 
-    }
-}
 
+    }

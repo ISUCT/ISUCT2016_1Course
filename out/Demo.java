@@ -12,6 +12,7 @@ public class Demo {
         c.takeage();
 
 
+
         Airplane[] airplanes = new Airplane[3];
 
         airplanes[0] = new Airplane();
@@ -41,8 +42,14 @@ public class Demo {
     }
 
 
+
+
+
     int summ(int a, int b) {
         int c = a + b;
         return c;
+    }
+
+
     }
 }
