@@ -1,0 +1,11 @@
+public class SumTest {
+    @Test
+    public void sum() throws Exception {
+        Sum sumDemo = new Sum();
+        int result = sumDemo.sum(1,2);
+        int expResult = 3;
+        assertEquals(expResult, result);
+
+    }
+
+}

@@ -1,0 +1,23 @@
+public class DotComTest {
+    @Test
+    public void checkYourself() throws Exception {
+        ArrayList<String> loc= new ArrayList<String>();
+        loc.add("2");
+        loc.add("3");
+        loc.add("4");
+        DotCom dot = new DotCom();
+        dot.setLocationCells(loc);
+String res = dot.checkYourself("2");
+        assertEquals("Попал", res);
+
+        String res = dot.checkYourself("3");
+        assertEquals("Потопил", res);
+
+        String res = dot.checkYourself("4");
+        assertEquals("Не попал", res);
+
+
+
+    }
+
+}

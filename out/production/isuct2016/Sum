@@ -1,0 +1,10 @@
+public class Sum {
+    public static void main(String[] args){
+        Sum sumDemo = new Sum();
+        sumDemo.sum(1,2);
+    }
+    public int sum(int a, int b) {
+        int c = a + b;
+        return c;
+    }
+}
