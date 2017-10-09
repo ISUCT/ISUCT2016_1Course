@@ -12,7 +12,8 @@ import static org.junit.Assert.*;
 /**
  * Created by Maxim on 26-Sep-17.
  */
-public class MallardDuckTest {
+public class MallardDuckTest{
+
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     PrintStream ps = new PrintStream(baos);
@@ -22,18 +23,19 @@ public class MallardDuckTest {
         System.setOut(ps);
     }
 
-    @After
-    public void tearDown() throws Exception {
-        baos.reset();
+
+    @Test
+    public void testMallardDisplay() throws Exception {
+        Duck mallard = new MallardDuck();
+        mallard.display();
+        assertEquals("Я - утка кряква\r\n", baos.toString());
     }
 
     @Test
-    public void testMallardQuack() {
-        Duck Mallard = new MallardDuck();
-        Mallard.display();
-        assertEquals("Я - утка кряква\r\n", baos.toString());
-
-
+    public void testMallardQuack() throws Exception {
+        Duck mallard = new MallardDuck();
+        mallard.performQuack();
+        assertEquals("Квак\r\n", baos.toString());
     }
 
     @Test
@@ -41,5 +43,34 @@ public class MallardDuckTest {
         Duck model = new ModelDuck();
         model.display();
         assertEquals("Я модель утки\r\n", baos.toString());
+    }
+
+    @Test
+    public void testMallardFly() throws Exception {
+        Duck mallard = new MallardDuck();
+        mallard.performFly();
+        assertEquals("Я лечу!\r\n", baos.toString());
+    }
+
+    @Test
+    public void testMallardChangeFly() throws Exception {
+        Duck mallard = new MallardDuck();
+        mallard.performFly();
+        assertEquals("Я лечу!\r\n", baos.toString());
+        baos.reset();
+        mallard.setFlyBehavior(new FlyNoWay());
+        mallard.performFly();
+        assertEquals("Я не могу летать\r\n", baos.toString());
+    }
+    @Test
+    public void testMallardChangeQuack() throws Exception {
+        Duck mallard = new MallardDuck();
+        mallard.performQuack();
+        assertEquals("Квак\r\n", baos.toString());
+        baos.reset();
+        mallard.setQuackBehavior(new MuteQuack());
+        mallard.performQuack();
+        assertEquals("<< Silence >>\r\n", baos.toString());
+
     }
 }
