@@ -5,6 +5,8 @@ package Duck;
  */
  public abstract class  Duck  {
      FlyBehavior flyBehavior;
+    Quackbehavior quackbehavior;
+    public void perfomQuack(){quackbehavior.quack();}
     public  void perfomFly(){
          flyBehavior.fly();
     };
@@ -12,5 +14,6 @@ package Duck;
      public void setFlyBehavior(FlyBehavior fb){
           flyBehavior = fb;
      }
+     public void setQuackbehavior (Quackbehavior qb){quackbehavior=qb;}
 
 }

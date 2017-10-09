@@ -6,6 +6,7 @@ package Duck;
 public class MallarDuck extends Duck{
 public MallarDuck(){
     flyBehavior = new  FlyWithWings();
+    quackbehavior = new MuteQuack();
 }
 @Override
 public void display(){
