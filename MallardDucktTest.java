@@ -55,7 +55,7 @@ public class MallardDuckTest {
             baos.reset();
             mallard.setQuackBehavior(new MuteQuack());
             mallard.performQuack();
-            assertEquals("<<< Silence >>>\r\n", baos.toString());
+            assertEquals("<< Silence >>\r\n", baos.toString());
 
     }
 
