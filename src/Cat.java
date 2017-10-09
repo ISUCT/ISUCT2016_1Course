@@ -5,6 +5,18 @@ public class Cat extends Felidae{
     private int Age;
     private String name;
     private String color;
+    public Cat(){
+        setName("NoName");
+        setColor("White");
+    }
+    public Cat(String N, String C  ){
+        setName(N);
+        setColor(C);
+    }
+    @Override
+    public String toString(){
+        return "Сolor:"+this.getColor()+"  Name:"+this.getName();
+    }
     @Override
     void talk() {
         System.out.println("May");
@@ -32,7 +44,7 @@ public class Cat extends Felidae{
     }
 
     @Override
-    void eat() {
+    public void eat() {
 
     }
 
