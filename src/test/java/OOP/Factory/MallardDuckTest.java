@@ -1,6 +1,6 @@
-package OOP;
+package OOP.Factory;
 
-import org.junit.After;
+import OOP.Factory.*;
 import org.junit.Before;
 import org.junit.Test;
 
