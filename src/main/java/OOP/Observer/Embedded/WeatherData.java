@@ -1,6 +1,7 @@
-package OOP.Observer;
+package OOP.Observer.Embedded;
 
 import java.util.ArrayList;
+
 /**
  * Created by UI on 11.10.2017.
  */

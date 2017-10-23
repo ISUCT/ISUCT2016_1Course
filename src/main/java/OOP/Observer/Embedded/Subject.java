@@ -1,4 +1,4 @@
-package OOP.Observer;
+package OOP.Observer.Embedded;
 
 
 /**
