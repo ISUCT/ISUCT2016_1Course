@@ -11,8 +11,8 @@ public class WeatherStation {
 //        StatisticsDisplay statisticsDisplay = new ForecastDisplay(weatherData);
 //        ForecastDisplay forecastDisplay = new ForecastDisplay(weatherData);
 
-        weatherData.serMeasurements(80, 65, 30.4f);
-        weatherData.serMeasurements(82, 70, 29.2f);
-        weatherData.serMeasurements(78, 90, 29.2f);
+        weatherData.setMeasurements(80, 65, 30.4f);
+        weatherData.setMeasurements(82, 70, 29.2f);
+        weatherData.setMeasurements(78, 90, 29.2f);
     }
 }
