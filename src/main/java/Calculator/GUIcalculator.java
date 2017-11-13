@@ -13,6 +13,10 @@ import java.util.*;
 /**
  * Created by maxim-mac on 15/05/2017.
  */
+
+/*
+
+
 public class GUIcalculator extends JFrame {
     private JFormattedTextField formattedTextField1;
     private JFormattedTextField formattedTextField2;
@@ -95,8 +99,8 @@ public class GUIcalculator extends JFrame {
         });
     }
 
-    private void onSave(){
-        FileMaskGUI data = new FileMaskGUI(xnVal, xkVal, dxVal, xVal, resultLabel.getText().replaceAll("\\<[^>]*>",""), textArea1.getText());
+    private void onSave() {
+        FileMaskGUI data = new FileMaskGUI(xnVal, xkVal, dxVal, xVal, resultLabel.getText().replaceAll("\\<[^>]*>", ""), textArea1.getText());
         dataList.add(data);
 
 //        String userhome = System.getProperty("user.home");
@@ -106,14 +110,14 @@ public class GUIcalculator extends JFrame {
 
     }
 
-    private void onLoad(){
+    private void onLoad() {
         JFileChooser fileOpen = new JFileChooser();
         fileOpen.showOpenDialog(contentPane);
         loadFile(fileOpen.getSelectedFile());
 
     }
 
-    private void loadFile(File file){
+    private void loadFile(File file) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(file));
@@ -121,46 +125,46 @@ public class GUIcalculator extends JFrame {
             String line;
             while ((line = reader.readLine()) != null) {
                 counter++;
-                    switch (counter) {
-                        case 1:
-                            xnVal = Double.parseDouble(line);
-                            formattedTextField1.setValue(xnVal);
-                            break;
-                        case 2:
-                            xkVal = Double.parseDouble(line);
-                            formattedTextField2.setValue(xkVal);
-                            break;
-                        case 3:
-                            dxVal = Double.parseDouble(line);
-                            formattedTextField3.setValue(dxVal);
-                            break;
-                        case 4:
-                            formattedTextField4.setValue(line);
-                            break;
-                        case 5:
-                            resultLabel.setText(line);
-                            break;
-                        case 6:
-                            textArea1.setText(line);
-                            break;
-                    }
+                switch (counter) {
+                    case 1:
+                        xnVal = Double.parseDouble(line);
+                        formattedTextField1.setValue(xnVal);
+                        break;
+                    case 2:
+                        xkVal = Double.parseDouble(line);
+                        formattedTextField2.setValue(xkVal);
+                        break;
+                    case 3:
+                        dxVal = Double.parseDouble(line);
+                        formattedTextField3.setValue(dxVal);
+                        break;
+                    case 4:
+                        formattedTextField4.setValue(line);
+                        break;
+                    case 5:
+                        resultLabel.setText(line);
+                        break;
+                    case 6:
+                        textArea1.setText(line);
+                        break;
+                }
             }
         } catch (Exception ex) {
             System.out.println("Couldn't read file");
             ex.printStackTrace();
         } finally {
             try {
-                if ( reader != null)
-                    reader.close( );
+                if (reader != null)
+                    reader.close();
+            } catch (IOException e) {
             }
-            catch ( IOException e) {}
         }
     }
 
     private void saveFile(File file) {
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter(file+".txt"));
+            writer = new BufferedWriter(new FileWriter(file + ".txt"));
             Iterator dataIterator = dataList.iterator();
             while (dataIterator.hasNext()) {
                 FileMaskGUI dataList = (FileMaskGUI) dataIterator.next();
@@ -171,15 +175,15 @@ public class GUIcalculator extends JFrame {
                 writer.write(dataList.getxLabelStr() + "\n");
                 writer.write(dataList.getxResStr() + "\n");
             }
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             resultLabel.setText("<html>Result: <font color=\"red\">Couldn't write file</font></html>");
             ex.printStackTrace();
         } finally {
             try {
-            if ( writer != null)
-                writer.close( );
+                if (writer != null)
+                    writer.close();
+            } catch (IOException e) {
             }
-            catch ( IOException e) {}
         }
     }
 
@@ -287,6 +291,9 @@ public class GUIcalculator extends JFrame {
      *
      * @noinspection ALL
      */
+
+
+/*
     private void $$$setupUI$$$() {
         createUIComponents();
         contentPane = new JPanel();
@@ -349,10 +356,14 @@ public class GUIcalculator extends JFrame {
     /**
      * @noinspection ALL
      */
+
+/*
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
 }
+
+*/
 
 
 
