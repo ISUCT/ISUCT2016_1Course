@@ -4,9 +4,9 @@ package Decorator;
  * Created by UI on 22.11.2017.
  */
 public abstract class Beverage {
-    String description = "Unknow beverage";
+    String description = "Unknown beverage";
 
-    public String getDescription90(){
+    public String getDescription(){
         return description;
     }
 
