@@ -1,4 +1,4 @@
-package OOP;
+package OOP.Factory;
 
 /**
  * Created by UI on 25.09.2017.

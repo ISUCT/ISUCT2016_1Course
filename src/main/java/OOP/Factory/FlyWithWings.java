@@ -1,4 +1,4 @@
-package OOP;
+package OOP.Factory;
 
 /**
  * Created by UI on 13.09.2017.
@@ -6,6 +6,6 @@ package OOP;
 public class FlyWithWings implements FlyBehavior {
     @Override
     public void fly() {
-        System.out.println("Я лечу");
+        System.out.println("Я лечу!");
     }
 }
